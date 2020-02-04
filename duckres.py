@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def prop(x_image,y_image,x_ratio,y_ratio):
     divimg = (x_image / y_image)
     divrat = (x_ratio / y_ratio)
