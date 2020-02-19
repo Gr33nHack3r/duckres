@@ -14,8 +14,8 @@ The Python library Pillow is the only dependency at the moment. You can get it i
 
       $ sudo pip --user install Pillow
 
--__MacOS__: available in the `pip` packet manager repos as `Pillow`. Install with
-
+- __MacOS__: available in the `pip` packet manager repos as `Pillow`. Install with
+      
       $ sudo pip install Pillow
 
 ## Installation
