@@ -14,6 +14,9 @@ The Python library Pillow is the only dependency at the moment. You can get it i
 
       $ sudo pip --user install Pillow
 
+-__MacOS__: available in the `pip` packet manager repos as `Pillow`. Install with
+      $ sudo pip install Pillow
+
 ## Installation
 
 The only file you really need is `duckres.py`. There are various methods for downloading it:
