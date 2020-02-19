@@ -2,57 +2,47 @@
 
 #############################################################################################################
 def prop(x_image,y_image,x_ratio,y_ratio):
-    divimg = (x_image / y_image) # resolution ratio
+    
+    divimg = (x_image / y_image) # resolution image ratio
     divrat = (x_ratio / y_ratio) # screen ratio
     
-    n = len(str(x_image)) - 2 #calculating the level of precision
+    n = len(str(x_image)) - 2 # calculating the level of precision
     
     # decreasing the witdh resolution until the image ratio and the screen ratio are equal       
     if divimg <= divrat:
         while round((x_image / y_image), n) != round((x_ratio / y_ratio), n):
             y_image -= 1
-        print("x = " + str(x_image)), print("y = " + str(y_image))
-    
+            
     # decreasing the height resolution until the image ratio and the screen ratio are equal
     elif divimg > divrat:
         while round((x_image / y_image), n) != round((x_ratio / y_ratio), n):   
             x_image -= 1
-        print("x = " + str(x_image)), print("y = " + str(y_image))
+                      
+    # returning the results
+    return x_image, y_image
 
 #############################################################################################################
-        
-def autocut(file,x_ratio,y_ratio):
+def printprop(x_image,y_image,x_ratio,y_ratio):
+    x_result, y_result = prop(x_image,y_image,x_ratio,y_ratio) # setting the variables as result
+    print("x = " + str(x_result)), print("y = " + str(y_result)) # printing the variables
+    
+#############################################################################################################
+def autocrop(file,x_ratio,y_ratio):
     from PIL import Image
-    with open(file) as image:
-    y_image, x_image = image.size # image resolution
-    y_res, x_res = y_image, x_image # setting variables for the result
-    
-    divimg = (x_image / y_image) # resolution ratio
-    divrat = (x_ratio / y_ratio) # screen ratio
-    
-    n = len(str(x_image)) - 2 # calculating the level of precision
-    
-    # decreasing the witdh resolution untile the image ratio and the screen ratio are equal
-    if divimg <= divrat:
-        while round((x_image / y_image), n) != round((x_ratio / y_ratio), n):
-            y_res -= 1
-    
-    # decreasing the height resolution until the image ratio and the screen ratio are equal
-    elif divimg > divrat:
-        while round((x_image / y_image), n) != round((x_ratio / y_ratio), n):
-            x_res -= 1
-    
-    # setting the variables containing the pixel to crop       
-    y_cut = int((y_image - y_res) / 2)
-    x_cut = int((x_image - x_res) / 2)
-    
-    # cropping image if the screen ratio is major than the image ratio
-    if divimg <= divrat:
-        img_crop = image.crop((0,y_cut,0,y_cut))
-    
-    # cropping image if the screen ratio is minor than the image ratio
-    elif divimg > divrat:
-        img_crop = image.crop((x_cut,0,x_cut,0))
+    with open(file) as im:
+        y_image, x_image = im.size # setting the (input image resolution)
+        x_res, y_res = prop(x_image,y_image,x_ratio,y_ratio) # setting (output image resolution)
         
-    # saving the image
-    image.save('cropped', format= 'png')
+        # setting pixel to crop       
+        y_cut = int((y_image - y_res) / 2)
+        x_cut = int((x_image - x_res) / 2)
+        
+        # crop image when (output image resolution) and (input image resolution) are different
+        if y_res != y_image:
+            img_crop = im.crop((0,y_cut,0,y_cut))
+        
+        elif x_res != x_image:
+            img_crop = im.crop((x_cut,0,x_cut,0))
+            
+        # saving the image
+        img_crop.save('cropped', format= 'png')
