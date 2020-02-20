@@ -29,20 +29,20 @@ def printprop(x_image,y_image,x_ratio,y_ratio):
 #############################################################################################################
 def autocrop(file,x_ratio,y_ratio):
     from PIL import Image
-    with open(file) as im:
+    with Image.open(file) as im:
         y_image, x_image = im.size # setting the (input image resolution)
-        x_res, y_res = prop(x_image,y_image,x_ratio,y_ratio) # setting (output image resolution)
+        x_out, y_out = prop(x_image,y_image,x_ratio,y_ratio) # setting (output image resolution)
         
         # setting pixel to crop       
-        y_cut = int((y_image - y_res) / 2)
-        x_cut = int((x_image - x_res) / 2)
+        y_cut = int((y_image - y_out) / 2)
+        x_cut = int((x_image - x_out) / 2)
         
         # crop image when (output image resolution) and (input image resolution) are different
-        if y_res != y_image:
-            img_crop = im.crop((0,y_cut,0,y_cut))
+        if y_out != y_image:
+            img_crop = im.crop(())
         
-        elif x_res != x_image:
-            img_crop = im.crop((x_cut,0,x_cut,0))
+        elif x_out != x_image:
+            img_crop = im.crop(())
             
         # saving the image
-        img_crop.save('cropped', format= 'png')
+        img_crop.save(str(file)+'_cropped.png','PNG')
